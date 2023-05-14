@@ -6,23 +6,23 @@
 
 char * TAG="FUCKJ";
 //WROVER-KIT PIN Map
-#define CAM_PIN_PWDN    21
-#define CAM_PIN_RESET   -1
-#define CAM_PIN_XCLK    -1
-#define CAM_PIN_SIOD    4
-#define CAM_PIN_SIOC    13
+#define CAM_PIN_PWDN    -1
+#define CAM_PIN_RESET   18
+#define CAM_PIN_XCLK    32
+#define CAM_PIN_SIOD    22
+#define CAM_PIN_SIOC    23
 
-#define CAM_PIN_D7      32
-#define CAM_PIN_D6      35
-#define CAM_PIN_D5      27
-#define CAM_PIN_D4      33
-#define CAM_PIN_D3      25
-#define CAM_PIN_D2      26
-#define CAM_PIN_D1      39
-#define CAM_PIN_D0      18
-#define CAM_PIN_VSYNC   15
-#define CAM_PIN_HREF    5
-#define CAM_PIN_PCLK    34
+#define CAM_PIN_D7      39
+#define CAM_PIN_D6      33
+#define CAM_PIN_D5      25
+#define CAM_PIN_D4      27
+#define CAM_PIN_D3      12
+#define CAM_PIN_D2      15
+#define CAM_PIN_D1      2
+#define CAM_PIN_D0      14
+#define CAM_PIN_VSYNC   5
+#define CAM_PIN_HREF    37
+#define CAM_PIN_PCLK    26
 
 static camera_config_t camera_config = {
         .pin_pwdn  = CAM_PIN_PWDN,
