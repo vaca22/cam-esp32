@@ -5,24 +5,51 @@
 #include "esp_camera.h"
 
 char * TAG="FUCKJ";
-//WROVER-KIT PIN Map
-#define CAM_PIN_PWDN    -1
-#define CAM_PIN_RESET   18
-#define CAM_PIN_XCLK    32
-#define CAM_PIN_SIOD    22
-#define CAM_PIN_SIOC    23
 
-#define CAM_PIN_D7      39
-#define CAM_PIN_D6      33
-#define CAM_PIN_D5      25
-#define CAM_PIN_D4      27
-#define CAM_PIN_D3      12
-#define CAM_PIN_D2      15
-#define CAM_PIN_D1      2
-#define CAM_PIN_D0      14
-#define CAM_PIN_VSYNC   5
-#define CAM_PIN_HREF    37
-#define CAM_PIN_PCLK    26
+#define S002_SPI1_CLK_IO                    GPIO_NUM_18
+#define S002_SPI1_MISO_IO                   GPIO_NUM_19
+#define S002_SPI1_MOSI_IO                   GPIO_NUM_23
+
+// SD Card
+#define S002_SD_CLK_IO                      S002_SPI1_CLK_IO
+#define S002_SD_DAT0_IO                     S002_SPI1_MISO_IO
+#define S002_SD_CMD_IO                      S002_SPI1_MOSI_IO
+#define S002_SD_CD_IO                       GPIO_NUM_4
+
+// Camera
+#define S002_CAMERA_RESET_IO                GPIO_NUM_5
+#define S002_CAMERA_XCLK_IO                 GPIO_NUM_15
+#define S002_CAMERA_SIOD_IO                 GPIO_NUM_21
+#define S002_CAMERA_SIOC_IO                 GPIO_NUM_22
+#define S002_CAMERA_D7_IO                   GPIO_NUM_2
+#define S002_CAMERA_D6_IO                   GPIO_NUM_13
+#define S002_CAMERA_D5_IO                   GPIO_NUM_12
+#define S002_CAMERA_D4_IO                   GPIO_NUM_32
+#define S002_CAMERA_D3_IO                   GPIO_NUM_25
+#define S002_CAMERA_D2_IO                   GPIO_NUM_27
+#define S002_CAMERA_D1_IO                   GPIO_NUM_26
+#define S002_CAMERA_D0_IO                   GPIO_NUM_33
+#define S002_CAMERA_VSYNC_IO                GPIO_NUM_17
+#define S002_CAMERA_HREF_IO                 GPIO_NUM_16
+#define S002_CAMERA_PCLK_IO                 GPIO_NUM_14
+//WROVER-KIT PIN Map
+#define CAM_PIN_PWDN        -1  //power down is not used
+#define CAM_PIN_RESET       S002_CAMERA_RESET_IO //software reset will be performed
+#define CAM_PIN_XCLK        S002_CAMERA_XCLK_IO
+#define CAM_PIN_SIOD        S002_CAMERA_SIOD_IO
+#define CAM_PIN_SIOC        S002_CAMERA_SIOC_IO
+
+#define CAM_PIN_D7          S002_CAMERA_D7_IO
+#define CAM_PIN_D6          S002_CAMERA_D6_IO
+#define CAM_PIN_D5          S002_CAMERA_D5_IO
+#define CAM_PIN_D4          S002_CAMERA_D4_IO
+#define CAM_PIN_D3          S002_CAMERA_D3_IO
+#define CAM_PIN_D2          S002_CAMERA_D2_IO
+#define CAM_PIN_D1          S002_CAMERA_D1_IO
+#define CAM_PIN_D0          S002_CAMERA_D0_IO
+#define CAM_PIN_VSYNC       S002_CAMERA_VSYNC_IO
+#define CAM_PIN_HREF        S002_CAMERA_HREF_IO
+#define CAM_PIN_PCLK        S002_CAMERA_PCLK_IO
 
 static camera_config_t camera_config = {
         .pin_pwdn  = CAM_PIN_PWDN,
@@ -49,7 +76,7 @@ static camera_config_t camera_config = {
 
         .pixel_format = PIXFORMAT_RGB565,//YUV422,GRAYSCALE,RGB565,JPEG
         .frame_size =  FRAMESIZE_QQVGA,//QQVGA-QXGA Do not use sizes above QVGA when not JPEG
-
+        .fb_location = CAMERA_FB_IN_DRAM,
         .jpeg_quality = 20, //0-63 lower number means higher quality
         .fb_count = 1, //if more than one, i2s runs in continuous mode. Use only with JPEG
         .grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled
